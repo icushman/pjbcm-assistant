@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pjbcma",
-    version="0.0.3",
+    version="0.0.4",
     author="Isaiah Cushman",
     author_email="icushman@uci.edu",
     description="An assistant for using pyjags",

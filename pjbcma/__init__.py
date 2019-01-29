@@ -13,7 +13,15 @@ from .SimpleSampler import SimpleSampler
 
 
 def demo():
-	mydemo = """ spec_string = \"\"\"
+	mydemo = """#PJBCMA DEMO:
+# Copy-paste this entire output into an ipython notebook cell
+# and run the cell to sample from and analyze a very basic
+# JAGS model.
+# For more advanced usage options, check out the examples
+# in the `Using pjbcmassistant for Bayesian modeling` notebook
+# at https://github.com/icushman/pjbcm-assistant
+
+spec_string = \"\"\"
 model: #model code or local .txt file
 model{
   for (i in 1:observationCount){ 
@@ -28,6 +36,8 @@ chains = 3 #number of chains to run
 samples = 1000 #number of samples per chain
 thinning = 0 #number of samples to discard between recorded samples
 burnin = 500 #number of burn-in samples per chain
+adapt = auto #integer or 'auto'. pjbcma.SimpleSampler uses 'auto' to adapt until optimal.
+seed = random #optionally set to number to fix seed (Mersenne-Twister)
 
 data:
 testScores = [1,2,3,4,5,6,7,8] # can be integer or list

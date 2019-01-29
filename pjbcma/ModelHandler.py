@@ -68,6 +68,9 @@ class ModelHandler:
 		self.thinning = 0
 		self.data = {}
 		self.sample = []
+		self.seed = None
+		self.adapt = 1000
+		self.seed = None
 
 		#Parse spec string
 		#TODO: Create set method to adjust these settings outside the spec string
@@ -127,12 +130,21 @@ class ModelHandler:
 			 string or using model_handler.set_model()")
 
 		masked_data = {data_var:np.ma.masked_invalid(self.data[data_var]) for data_var in self.data}
+		
 		model_args = {'code':self.model,
 			'init':self.init,
 			'data': masked_data if len(masked_data) > 0 else None,
 			'chains':int(self.chains),
-			'adapt':int(self.burnin),
 		}
+
+		if self.adapt == "auto":
+			model_args['adapt'] = 0
+		else:
+			model_args['adapt'] = int(self.adapt)
+
+		if self.seed != None and self.seed.lower() not in ('random', 'none'):
+			model_args['init'] = {'.RNG.name':'base::Mersenne-Twister',
+									'.RNG.seed': float(self.seed)}
 		return model_args
 
 	def get_sample_args(self) -> dict:
